@@ -64,9 +64,13 @@ export default function App() {
 
   const filterActiveTask = () => {
     const task = allTask.map((task) => {
-      return !task.compile;
+      if (task.compile == 0) {
+        return task;
+      }
+      console.log(task);
+      setActiveTask([...activeTask, task]);
     });
-    setActiveTask([...activeTask, task]);
+    // setActiveTask([...activeTask, task]);
   };
 
   console.log(activeTask);
