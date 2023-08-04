@@ -114,13 +114,12 @@ export default function App() {
 
   const compileThisTask = (id) => {
     for (const i of allTask) {
-      if (i.id === id) {
+      if (i.id === 1) {
         i.compile = !i.compile;
       }
     }
-    console.log(allTask);
+    setCompileTask(allTask);
   };
-
   const deleteTask = (id) => {
     const allNewTask = allTask.filter((task) => {
       return task.id !== id;
