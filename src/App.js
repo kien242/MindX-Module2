@@ -201,7 +201,7 @@ export default function App() {
             </CustomTabPanel>
 
             <CustomTabPanel value={value} index={1}>
-              <FormAddTask />
+              <FormAddTask taskhandle={handleChangeTask} newTask={newTask} />
               {renderActiveTask}
             </CustomTabPanel>
 
