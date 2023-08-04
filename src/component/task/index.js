@@ -19,7 +19,7 @@ export default function TaskWithCheckbox(props) {
           inputProps={{ "aria-label": "controlled" }}
         />
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center", mr: 30 }}>
+      <Box sx={{ display: "flex", alignItems: "center", width: "65%" }}>
         <Typography
           variant="h5"
           sx={{
