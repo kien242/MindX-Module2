@@ -5,7 +5,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TaskWithCheckbox from "./component/task/index.js";
 import FormAddTask from "./component/form/index.js";
-import { Button, Grid, ListItem } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import uniqid from "uniqid";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,32 +39,52 @@ export default function App() {
   const [value, setValue] = React.useState(0);
   const [allTask, setAllTask] = React.useState([
     {
-      id: "1",
-      check: false,
+      id: 1,
       taskName: "Hoan thanh bai kiem tra 1",
       compile: false,
     },
     {
-      id: "2",
-      check: false,
+      id: 2,
       taskName: "Hoan thanh bai kiem tra 2",
-      compile: true,
+      compile: false,
     },
     {
-      id: "3",
-      check: false,
+      id: 3,
       taskName: "Hoan thanh bai kiem tra 3",
       compile: false,
     },
     {
-      id: "4",
-      check: false,
+      id: 4,
       taskName: "Hoan thanh bai kiem tra 4",
       compile: false,
     },
   ]);
+  const [activeTask, setActiveTask] = React.useState([]);
+  const [compileTask, setCompileTask] = React.useState([]);
 
-  const renderAllTask = allTask.map(function (task) {
+  const CompileTask = allTask.filter((item) => item.compile);
+
+  const renderAllTask = allTask.map((task) => {
+    return (
+      <TaskWithCheckbox
+        key={task.id}
+        taskName={task.taskName}
+        complitedTask={task.compile}
+      />
+    );
+  });
+
+  const renderActiveTask = activeTask.map(function (task) {
+    return (
+      <TaskWithCheckbox
+        key={task.id}
+        taskName={task.taskName}
+        complitedTask={task.compile}
+      />
+    );
+  });
+
+  const renderCompileTask = compileTask.map(function (task) {
     return (
       <TaskWithCheckbox
         key={task.id}
@@ -77,6 +98,35 @@ export default function App() {
     setValue(newValue);
   };
 
+  const [taskText, setTaskText] = React.useState([]);
+  const handleChangeTask = (event) => {
+    setTaskText(event.target.value);
+  };
+
+  const newTask = () => {
+    const newTask = {
+      id: uniqid(),
+      taskName: taskText,
+      compile: false,
+    };
+    setAllTask([...allTask, newTask]);
+  };
+
+  const compileThisTask = (id) => {
+    for (const i of allTask) {
+      if (i.id === id) {
+        i.compile = !i.compile;
+      }
+    }
+    console.log(allTask);
+  };
+
+  const deleteTask = (id) => {
+    const allNewTask = allTask.filter((task) => {
+      return task.id !== id;
+    });
+    setAllTask(allNewTask);
+  };
   return (
     <>
       <Box width={"100%"}>
@@ -120,19 +170,24 @@ export default function App() {
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-              <FormAddTask />
+              <FormAddTask taskhandle={handleChangeTask} newTask={newTask} />
               {renderAllTask}
+              <Grid container justifyContent="flex-end">
+                <Button variant="contained" onClick={compileThisTask}>
+                  Compile
+                </Button>
+              </Grid>
             </CustomTabPanel>
 
             <CustomTabPanel value={value} index={1}>
               <FormAddTask />
-              <TaskWithCheckbox taskName="adfhfadsf" complitedTask={false} />
+              {renderActiveTask}
             </CustomTabPanel>
 
             <CustomTabPanel value={value} index={2}>
-              <TaskWithCheckbox taskName="adfh" complitedTask={true} />
+              {renderCompileTask}
               <Grid container justifyContent="flex-end">
-                <Button variant="contained" color="error">
+                <Button variant="contained" color="error" onClick={deleteTask}>
                   Delete
                 </Button>
               </Grid>

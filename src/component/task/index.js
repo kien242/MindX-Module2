@@ -29,6 +29,9 @@ export default function TaskWithCheckbox(props) {
           {taskName}
         </Typography>
       </Box>
+      {/* <Box>
+        <Button variant="contained">Delete</Button>
+      </Box> */}
     </Box>
   );
 }

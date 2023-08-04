@@ -1,7 +1,8 @@
 import { Box, Button, FormControl, TextField } from "@mui/material";
 import React from "react";
 
-export default function FormAddTask() {
+export default function FormAddTask(props) {
+  const { taskhandle, newTask } = props;
   return (
     <FormControl sx={{ width: "100%", mb: 3 }}>
       <Box
@@ -16,6 +17,7 @@ export default function FormAddTask() {
             label="Add task"
             variant="outlined"
             sx={{ width: "100%" }}
+            onChange={taskhandle}
           />
         </Box>
         <Box
@@ -25,7 +27,7 @@ export default function FormAddTask() {
             alignItems: "center",
           }}
         >
-          <Button variant="contained" sx={{ width: "100%" }}>
+          <Button variant="contained" sx={{ width: "100%" }} onClick={newTask}>
             Add
           </Button>
         </Box>
