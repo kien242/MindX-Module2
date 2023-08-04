@@ -84,12 +84,13 @@ export default function App() {
 
   const compileThisTask = (id) => {
     for (const i of allTask) {
-      if (i.id === 1) {
+      if (i.id === id) {
         i.compile = !i.compile;
       }
     }
-    setCompileTask(allTask);
+    console.log(allTask);
   };
+
   const deleteThisTask = (id) => {
     const allNewTask = allTask.filter((task) => {
       return task.id !== id;
@@ -103,8 +104,12 @@ export default function App() {
         key={task.id}
         taskName={task.taskName}
         complitedTask={task.compile}
-        deleteTask={deleteThisTask}
-        compileTask={compileThisTask}
+        deleteTask={() => {
+          deleteThisTask(task.id);
+        }}
+        compileTask={() => {
+          compileThisTask(task.id);
+        }}
       />
     );
   });
