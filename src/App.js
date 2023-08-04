@@ -62,7 +62,14 @@ export default function App() {
   const [activeTask, setActiveTask] = React.useState([]);
   const [compileTask, setCompileTask] = React.useState([]);
 
-  const CompileTask = allTask.filter((item) => item.compile);
+  const filterActiveTask = () => {
+    const task = allTask.map((task) => {
+      return !task.compile;
+    });
+    setActiveTask([...activeTask, task]);
+  };
+
+  console.log(activeTask);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -175,7 +182,12 @@ export default function App() {
                 }}
               >
                 <Tab label="All" {...a11yProps(0)} sx={{ width: "33%" }} />
-                <Tab label="Active" {...a11yProps(1)} sx={{ width: "33%" }} />
+                <Tab
+                  label="Active"
+                  {...a11yProps(1)}
+                  sx={{ width: "33%" }}
+                  onClick={filterActiveTask}
+                />
                 <Tab label="Compile" {...a11yProps(2)} sx={{ width: "33%" }} />
               </Tabs>
             </Box>
