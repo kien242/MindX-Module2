@@ -64,36 +64,6 @@ export default function App() {
 
   const CompileTask = allTask.filter((item) => item.compile);
 
-  const renderAllTask = allTask.map((task) => {
-    return (
-      <TaskWithCheckbox
-        key={task.id}
-        taskName={task.taskName}
-        complitedTask={task.compile}
-      />
-    );
-  });
-
-  const renderActiveTask = activeTask.map(function (task) {
-    return (
-      <TaskWithCheckbox
-        key={task.id}
-        taskName={task.taskName}
-        complitedTask={task.compile}
-      />
-    );
-  });
-
-  const renderCompileTask = compileTask.map(function (task) {
-    return (
-      <TaskWithCheckbox
-        key={task.id}
-        taskName={task.taskName}
-        complitedTask={task.compile}
-      />
-    );
-  });
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -120,12 +90,48 @@ export default function App() {
     }
     setCompileTask(allTask);
   };
-  const deleteTask = (id) => {
+  const deleteThisTask = (id) => {
     const allNewTask = allTask.filter((task) => {
       return task.id !== id;
     });
     setAllTask(allNewTask);
   };
+
+  const renderAllTask = allTask.map((task) => {
+    return (
+      <TaskWithCheckbox
+        key={task.id}
+        taskName={task.taskName}
+        complitedTask={task.compile}
+        deleteTask={deleteThisTask}
+        compileTask={compileThisTask}
+      />
+    );
+  });
+
+  const renderActiveTask = activeTask.map(function (task) {
+    return (
+      <TaskWithCheckbox
+        key={task.id}
+        taskName={task.taskName}
+        complitedTask={task.compile}
+        deleteTask={deleteThisTask}
+        compileTask={compileThisTask}
+      />
+    );
+  });
+
+  const renderCompileTask = compileTask.map(function (task) {
+    return (
+      <TaskWithCheckbox
+        key={task.id}
+        taskName={task.taskName}
+        complitedTask={task.compile}
+        deleteTask={deleteThisTask}
+      />
+    );
+  });
+
   return (
     <>
       <Box width={"100%"}>
@@ -171,11 +177,6 @@ export default function App() {
             <CustomTabPanel value={value} index={0}>
               <FormAddTask taskhandle={handleChangeTask} newTask={newTask} />
               {renderAllTask}
-              <Grid container justifyContent="flex-end">
-                <Button variant="contained" onClick={compileThisTask}>
-                  Compile
-                </Button>
-              </Grid>
             </CustomTabPanel>
 
             <CustomTabPanel value={value} index={1}>
@@ -186,7 +187,7 @@ export default function App() {
             <CustomTabPanel value={value} index={2}>
               {renderCompileTask}
               <Grid container justifyContent="flex-end">
-                <Button variant="contained" color="error" onClick={deleteTask}>
+                <Button variant="contained" color="error">
                   Delete
                 </Button>
               </Grid>

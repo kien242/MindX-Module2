@@ -3,7 +3,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { Box, Typography, Button } from "@mui/material";
 
 export default function TaskWithCheckbox(props) {
-  const { complitedTask, taskName, deleteTask } = props;
+  const { complitedTask, taskName, deleteTask, compileTask } = props;
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event) => {
@@ -19,7 +19,7 @@ export default function TaskWithCheckbox(props) {
           inputProps={{ "aria-label": "controlled" }}
         />
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center", mr: 50 }}>
+      <Box sx={{ display: "flex", alignItems: "center", mr: 30 }}>
         <Typography
           variant="h5"
           sx={{
@@ -28,6 +28,11 @@ export default function TaskWithCheckbox(props) {
         >
           {taskName}
         </Typography>
+      </Box>
+      <Box>
+        <Button variant="contained" onClick={compileTask} sx={{ mr: 2 }}>
+          Compile
+        </Button>
       </Box>
       <Box>
         <Button variant="contained" onClick={deleteTask}>
